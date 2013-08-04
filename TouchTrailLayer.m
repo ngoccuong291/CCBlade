@@ -24,19 +24,74 @@
  */
 
 #import "TouchTrailLayer.h"
+#import "UIBezierPath-Points.h"
+#import "CMUnistrokeRecognizer.h"
+#import "CMUnistrokeGestureResult.h"
+#import "CMUDTemplatePaths.h"
+#import "CMUDTemplate.h"
 
-@implementation TouchTrailLayer
+
+static void
+        CMURCGPathApplierFunc(void *info, const CGPathElement *element);
+
+@interface TouchTrailLayer()
+
+@property (nonatomic, strong) NSMutableArray *touchPaths;
+@property (nonatomic, strong) UIBezierPath *strokePath;
+
+@property (nonatomic, assign) float minimumScoreThreshold;
+
+@property (nonatomic, strong, readwrite) CMUnistrokeGestureResult *result;
+
+@property (strong, nonatomic) NSMutableDictionary *templates;
+
+@end
+
+
+@implementation TouchTrailLayer{
+    CMURTemplatesRef _unistrokeTemplates;
+    CMUROptionsRef _options;
+}
 
 - (id) init{
 	self = [super init];
-	_touchEnabled = 1;
-    map = CFDictionaryCreateMutable(NULL,0,NULL,NULL);
-    CCSprite *bg = [CCSprite spriteWithFile:@"Default.png"];
-    bg.rotation = 90;
-    bg.position = ccp(240,160);
-    [self addChild:bg];
-    
+
+    if (self) {
+        _touchEnabled = 1;
+        map = CFDictionaryCreateMutable(NULL,0,NULL,NULL);
+        CCSprite *bg = [CCSprite spriteWithFile:@"Default.png"];
+        bg.rotation = 90;
+        bg.position = ccp(240,160);
+        [self addChild:bg];
+
+
+        self.touchPaths = @[].mutableCopy;
+
+
+        _unistrokeTemplates = CMURTemplatesNew();
+        _options = CMUROptionsNew();
+        _options->useProtractor = false;
+        _options->rotationNormalisationDisabled = false;
+
+
+        [self initializeDefaultTemplates];
+
+        [self addStrokeTemplates];
+    }
+
 	return self;
+}
+
+- (void) dealloc{
+    CFRelease(map);
+
+
+    if (_options) {
+        CMUROptionsDelete(_options); _options = NULL;
+    }
+    if (_unistrokeTemplates) {
+        CMURTemplatesDelete(_unistrokeTemplates); _unistrokeTemplates = NULL;
+    }
 }
 
 + (CCScene *) scene{
@@ -74,11 +129,150 @@
 	for (UITouch *touch in touches) {
 		CCBlade *w = (CCBlade *)CFDictionaryGetValue(map, (__bridge const void *)(touch));
         [w finish];
+
+        self.strokePath = [UIBezierPath pathWithPoints:w.path];
+        [_touchPaths addObject:_strokePath];
+
         CFDictionaryRemoveValue(map,(__bridge const void *)(touch));
+
+        DLog(@"Recognized:%@", [self isUnistrokeRecognized]? @"YES" : @"NO");
 	}
 }
 
-- (void) dealloc{
-    CFRelease(map);
+
+
+#pragma mark - Private
+
+#pragma mark Setup
+- (void)initializeDefaultTemplates
+{
+    NSMutableDictionary *templates = [NSMutableDictionary dictionary];
+
+    for (unsigned int i=0; ; i++) {
+        struct templatePath templatePath = templatePaths[i];
+        if (templatePath.length == 0) break;
+
+        UIBezierPath *bezierPath = [[UIBezierPath alloc] init];
+        [bezierPath moveToPoint:templatePath.points[0]];
+        for (NSUInteger j=1; j<templatePath.length; j++) {
+            [bezierPath addLineToPoint:templatePath.points[j]];
+        }
+
+        NSString *name = [NSString stringWithUTF8String:templatePath.name];
+
+        CMUDTemplate *template = [templates valueForKey:name];
+        if (template == nil) {
+            template = [[CMUDTemplate alloc] initWithName:name];
+            [templates setValue:template forKey:name];
+        }
+        [template addPath:bezierPath];
+    }
+
+    self.templates = templates;
 }
+
+- (void)addStrokeTemplates
+{
+    [self clearAllUnistrokes];
+
+    for (CMUDTemplate *template in [self.templates allValues]) {
+        for (UIBezierPath *path in template.paths) {
+            [self registerUnistrokeWithName:template.name bezierPath:path];
+        }
+    }
+    DLog(@"Done registering");
+}
+
+#pragma mark - Unistroke Methods
+
+- (void)clearAllUnistrokes
+{
+    if (_unistrokeTemplates) {
+        CMURTemplatesDelete(_unistrokeTemplates);
+    }
+    _unistrokeTemplates = CMURTemplatesNew();
+}
+
+- (void)registerUnistrokeWithName:(NSString *)name bezierPath:(UIBezierPath *)bezierPath
+{
+    [self registerUnistrokeWithName:name bezierPath:bezierPath bidirectional:NO];
+}
+
+- (void)registerUnistrokeWithName:(NSString *)name bezierPath:(UIBezierPath *)bezierPath bidirectional:(BOOL)bidirectional
+{
+    CMURPathRef path = [self pathFromBezierPath:bezierPath];
+    CMURTemplatesAdd(_unistrokeTemplates, [name cStringUsingEncoding:NSUTF8StringEncoding], path, _options);
+
+    if (bidirectional) {
+        CMURPathReverse(path);
+        CMURTemplatesAdd(_unistrokeTemplates, [name cStringUsingEncoding:NSUTF8StringEncoding], path, _options);
+    }
+
+    CMURPathDelete(path);
+}
+
+- (BOOL)isUnistrokeRecognized
+{
+    CMURPathRef path = [self pathFromBezierPath:self.strokePath];
+    CMURResultRef result = unistrokeRecognizePathFromTemplates(path, _unistrokeTemplates, _options);
+    CMURPathDelete(path);
+
+    BOOL isRecognized;
+    if (result && result->score >= self.minimumScoreThreshold) {
+        isRecognized = YES;
+        self.result = [[CMUnistrokeGestureResult alloc] initWithName:[NSString stringWithCString:result->name encoding:NSUTF8StringEncoding] score:result->score];
+        DLog(@"Recognized: result->score = %f result->name = '%s'", result->score, result->name);
+    }
+    else {
+        isRecognized = NO;
+        self.result = nil;
+        DLog(@"NOT Recognized");
+    }
+
+    CMURResultDelete(result);
+
+    return isRecognized;
+}
+
+- (CMURPathRef)pathFromBezierPath:(UIBezierPath *)bezierPath
+{
+    CMURPathRef path = CMURPathNew();
+    CGPathApply(bezierPath.CGPath, path, CMURCGPathApplierFunc);
+
+    return path;
+}
+
+static void
+CMURCGPathApplierFunc(void *info, const CGPathElement *element)
+{
+    CMURPathRef path = (CMURPathRef)info;
+
+    CGPoint *points = element->points;
+    CGPathElementType type = element->type;
+
+    switch(type) {
+        case kCGPathElementMoveToPoint: // contains 1 point
+            CMURPathAddPoint(path, points[0].x, points[0].y);
+            break;
+
+        case kCGPathElementAddLineToPoint: // contains 1 point
+            CMURPathAddPoint(path, points[0].x, points[0].y);
+            break;
+
+        case kCGPathElementAddQuadCurveToPoint: // contains 2 points
+            CMURPathAddPoint(path, points[0].x, points[0].y);
+            CMURPathAddPoint(path, points[1].x, points[1].y);
+            break;
+
+        case kCGPathElementAddCurveToPoint: // contains 3 points
+            CMURPathAddPoint(path, points[0].x, points[0].y);
+            CMURPathAddPoint(path, points[1].x, points[1].y);
+            CMURPathAddPoint(path, points[2].x, points[2].y);
+            break;
+
+        case kCGPathElementCloseSubpath: // contains no point
+            break;
+    }
+}
+
 @end

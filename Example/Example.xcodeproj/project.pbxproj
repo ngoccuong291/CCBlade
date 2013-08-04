@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1F3B9A2D0EF2145700286867 /* ExampleAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1F3B9A2B0EF2145700286867 /* ExampleAppDelegate.m */; };
+		32A112649FF014A4A4B0FBBC /* CMUnistrokeRecognizer.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A11A1461F8773AD8966606 /* CMUnistrokeRecognizer.c */; };
+		32A113DDD5669C8A6EF8B28D /* CMUnistrokeRecognizerTypes.c in Sources */ = {isa = PBXBuildFile; fileRef = 32A11EDB9AD38B3918E987B2 /* CMUnistrokeRecognizerTypes.c */; };
+		32A115FF00A6CBD3F1CB0C31 /* CMUDStrokeTemplateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A11399AEB5B98086FAD937 /* CMUDStrokeTemplateView.m */; };
+		32A11602F026AC3C53187008 /* CMUnistrokeGestureResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A118E06C9D3FC1CD10D590 /* CMUnistrokeGestureResult.m */; };
+		32A119B8EC7693DC3B81545B /* UIBezierPath-Points.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A11FDC7DFC6A17788956B1 /* UIBezierPath-Points.m */; };
+		32A11BE1632BFFB1E759AC76 /* CMUDTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 32A11C97E46AAA68D8424101 /* CMUDTemplate.m */; };
+		35F9C84017AE6C4C00BBA8FE /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35F9C83F17AE6C4C00BBA8FE /* GLKit.framework */; };
 		473FCC44156A6B03007DD659 /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 473FCC43156A6B03007DD659 /* HelloWorldLayer.m */; };
 		473FCC46156A6BCE007DD659 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 473FCC45156A6BCE007DD659 /* GameKit.framework */; };
 		473FCC4C156A6DC4007DD659 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 473FCC49156A6DC4007DD659 /* fps_images.png */; };
@@ -49,6 +56,21 @@
 		1F3B9A2C0EF2145700286867 /* ExampleAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ExampleAppDelegate.h; path = Classes/ExampleAppDelegate.h; sourceTree = SOURCE_ROOT; };
 		1F3B9A820EF2151B00286867 /* Example_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Example_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		32A111C2BBCDB9A1B8D316B6 /* CMUnistrokeRecognizerPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUnistrokeRecognizerPrivate.h; sourceTree = "<group>"; };
+		32A11399AEB5B98086FAD937 /* CMUDStrokeTemplateView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMUDStrokeTemplateView.m; sourceTree = "<group>"; };
+		32A11404CE5C54A8D2487E6A /* CMUDTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUDTemplate.h; sourceTree = "<group>"; };
+		32A116E1F48C3058BD99BEB1 /* CMUnistrokeRecognizerTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUnistrokeRecognizerTypes.h; sourceTree = "<group>"; };
+		32A118E06C9D3FC1CD10D590 /* CMUnistrokeGestureResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMUnistrokeGestureResult.m; sourceTree = "<group>"; };
+		32A1196E34699D3992375D8A /* CMUnistrokeRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUnistrokeRecognizer.h; sourceTree = "<group>"; };
+		32A11A1461F8773AD8966606 /* CMUnistrokeRecognizer.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CMUnistrokeRecognizer.c; sourceTree = "<group>"; };
+		32A11A5FFE7FCC651C7DD064 /* CMUDTemplatePaths.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUDTemplatePaths.h; sourceTree = "<group>"; };
+		32A11B8D30AA6B40B9AEDC04 /* UIBezierPath-Points.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBezierPath-Points.h"; sourceTree = "<group>"; };
+		32A11C97E46AAA68D8424101 /* CMUDTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMUDTemplate.m; sourceTree = "<group>"; };
+		32A11CB74C6F90115E818911 /* CMUDStrokeTemplateView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUDStrokeTemplateView.h; sourceTree = "<group>"; };
+		32A11CE76ADAD469BBC29CCB /* CMUnistrokeGestureResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMUnistrokeGestureResult.h; sourceTree = "<group>"; };
+		32A11EDB9AD38B3918E987B2 /* CMUnistrokeRecognizerTypes.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = CMUnistrokeRecognizerTypes.c; sourceTree = "<group>"; };
+		32A11FDC7DFC6A17788956B1 /* UIBezierPath-Points.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBezierPath-Points.m"; sourceTree = "<group>"; };
+		35F9C83F17AE6C4C00BBA8FE /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		40AB03C08EDC4AA6A1CD2C5D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		473FCC42156A6B03007DD659 /* HelloWorldLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
 		473FCC43156A6B03007DD659 /* HelloWorldLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
@@ -93,6 +115,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				35F9C84017AE6C4C00BBA8FE /* GLKit.framework in Frameworks */,
 				473FCC46156A6BCE007DD659 /* GameKit.framework in Frameworks */,
 				DCCBF1B70F6022AE0040855A /* CoreGraphics.framework in Frameworks */,
 				DCCBF1B90F6022AE0040855A /* Foundation.framework in Frameworks */,
@@ -121,6 +144,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				35F9C83F17AE6C4C00BBA8FE /* GLKit.framework */,
 				473FCC45156A6BCE007DD659 /* GameKit.framework */,
 				2D500B1D0D5A766B00DBA0E3 /* Classes */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
@@ -169,8 +193,30 @@
 				47B71D5F137130530008113A /* TouchTrailLayer.m */,
 				1F3B9A2C0EF2145700286867 /* ExampleAppDelegate.h */,
 				1F3B9A2B0EF2145700286867 /* ExampleAppDelegate.m */,
+				32A11B8D30AA6B40B9AEDC04 /* UIBezierPath-Points.h */,
+				32A11FDC7DFC6A17788956B1 /* UIBezierPath-Points.m */,
+				32A114FA42AE45C646A85975 /* CMUnistrokeRecognizer */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		32A114FA42AE45C646A85975 /* CMUnistrokeRecognizer */ = {
+			isa = PBXGroup;
+			children = (
+				32A11A1461F8773AD8966606 /* CMUnistrokeRecognizer.c */,
+				32A1196E34699D3992375D8A /* CMUnistrokeRecognizer.h */,
+				32A11EDB9AD38B3918E987B2 /* CMUnistrokeRecognizerTypes.c */,
+				32A116E1F48C3058BD99BEB1 /* CMUnistrokeRecognizerTypes.h */,
+				32A111C2BBCDB9A1B8D316B6 /* CMUnistrokeRecognizerPrivate.h */,
+				32A11CE76ADAD469BBC29CCB /* CMUnistrokeGestureResult.h */,
+				32A118E06C9D3FC1CD10D590 /* CMUnistrokeGestureResult.m */,
+				32A11A5FFE7FCC651C7DD064 /* CMUDTemplatePaths.h */,
+				32A11404CE5C54A8D2487E6A /* CMUDTemplate.h */,
+				32A11C97E46AAA68D8424101 /* CMUDTemplate.m */,
+				32A11CB74C6F90115E818911 /* CMUDStrokeTemplateView.h */,
+				32A11399AEB5B98086FAD937 /* CMUDStrokeTemplateView.m */,
+			);
+			path = CMUnistrokeRecognizer;
 			sourceTree = "<group>";
 		};
 		50F414EB1069373D002A0D5E /* Resources */ = {
@@ -317,6 +363,12 @@
 				47B71D60137130530008113A /* CCBlade.m in Sources */,
 				47B71D61137130530008113A /* TouchTrailLayer.m in Sources */,
 				473FCC44156A6B03007DD659 /* HelloWorldLayer.m in Sources */,
+				32A119B8EC7693DC3B81545B /* UIBezierPath-Points.m in Sources */,
+				32A112649FF014A4A4B0FBBC /* CMUnistrokeRecognizer.c in Sources */,
+				32A113DDD5669C8A6EF8B28D /* CMUnistrokeRecognizerTypes.c in Sources */,
+				32A11602F026AC3C53187008 /* CMUnistrokeGestureResult.m in Sources */,
+				32A11BE1632BFFB1E759AC76 /* CMUDTemplate.m in Sources */,
+				32A115FF00A6CBD3F1CB0C31 /* CMUDStrokeTemplateView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -332,6 +384,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Duc Hiep Ngo (36Q6CZ7F37)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -361,6 +414,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Duc Hiep Ngo (36Q6CZ7F37)";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Example_Prefix.pch;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;

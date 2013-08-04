@@ -29,7 +29,7 @@
 
 - (id) init{
 	self = [super init];
-	isTouchEnabled_ = 1;
+	_touchEnabled = 1;
     map = CFDictionaryCreateMutable(NULL,0,NULL,NULL);
     CCSprite *bg = [CCSprite spriteWithFile:@"Default.png"];
     bg.rotation = 90;
